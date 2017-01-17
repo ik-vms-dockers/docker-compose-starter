@@ -1,0 +1,6 @@
+docker-compose <service> sh >> ssh into a container
+
+docker-compose exec <service> ping -c3 <service> >> make 3 ping requests to another service
+
+docker-compose --project-name <some name> up -d
+
