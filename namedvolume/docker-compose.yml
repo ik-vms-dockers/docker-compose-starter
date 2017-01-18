@@ -1,0 +1,19 @@
+version: "2"
+services:
+  worker:
+    image: tutum/hello-world
+    volumes:
+     # alias for a volume
+      - results:/results
+  reporting:
+    image:  tutum/hello-world
+    # get volume from container
+    volumes_from:
+      - worker:ro 
+
+
+volumes:
+  results:
+      
+
+  

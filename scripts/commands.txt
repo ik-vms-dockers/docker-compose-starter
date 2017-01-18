@@ -8,3 +8,21 @@ docker-compose scale <container>=<instances> >> number of instances
 
 
 docker-compose port <service> 80 find port that is available.
+
+docker-compose exec <worker> ls /results #list all the files in results
+
+docker volume ls # list all volumes
+
+# create file inside container using shared volume
+docker exec <name service> touch /results/foo
+
+# list docker volumes
+docker volume ls -qf dangling=true
+
+# remove docker volumes
+docker volume rm $(docker volume ls -qf dangling=true)
+
+# logs for docker
+docker-compose logs -f
+
+

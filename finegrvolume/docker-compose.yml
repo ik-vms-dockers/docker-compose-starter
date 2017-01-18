@@ -1,0 +1,14 @@
+version: "2"
+services: 
+   resizer:
+     image: tutum/hello-world
+     volumes:
+      # read and write external volume
+      - images:/images:rw
+
+# docker volume create --name iamges --driver=local
+volumes:
+  images:
+     # external volume
+     external: true
+
