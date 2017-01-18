@@ -2,15 +2,22 @@ version: '2'
 services:
   a:
    image: tutum/hello-world
+   container_name: first
    networks:
     - frontend
   b:
    image: tutum/hello-world
+   container_name: second
    networks:
-    - frontend
-    - backend
+     frontend:
+       aliases:
+         - web
+     backend:
+       aliases:
+         - website
   c: 
    image: tutum/hello-world
+   container_name: third
    networks:
     - backend
 

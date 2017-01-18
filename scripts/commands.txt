@@ -4,3 +4,5 @@ docker-compose exec <service> ping -c3 <service> >> make 3 ping requests to anot
 
 docker-compose --project-name <some name> up -d
 
+docker-compose scale <container>=<instances> >> number of instances
+
