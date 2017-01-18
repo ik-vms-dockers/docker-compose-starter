@@ -1,7 +1,11 @@
 version: '2'
 services:
    worker:
-      image: tutum/hello-world
+      image: tutum/hello-world:${TAG}
       container_name: envimage
+      emvironment:
+       - BAR=1
+      env_file: 
+        - "staging.env"
       ports:
        - 8080:80

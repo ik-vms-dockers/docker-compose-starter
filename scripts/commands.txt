@@ -27,3 +27,7 @@ docker-compose logs -f
 
 # get runnung port
 docker-compose port --index=<instance index> <worker service> 80
+
+# provide environment variables to environment
+docker-compose run worker env
+
