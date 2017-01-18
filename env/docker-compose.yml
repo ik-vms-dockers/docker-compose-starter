@@ -1,0 +1,7 @@
+version: '2'
+services:
+   worker:
+      image: tutum/hello-world
+      container_name: envimage
+      ports:
+       - 8080:80

@@ -25,4 +25,5 @@ docker volume rm $(docker volume ls -qf dangling=true)
 # logs for docker
 docker-compose logs -f
 
-
+# get runnung port
+docker-compose port --index=<instance index> <worker service> 80
