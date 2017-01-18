@@ -6,3 +6,5 @@ docker-compose --project-name <some name> up -d
 
 docker-compose scale <container>=<instances> >> number of instances
 
+
+docker-compose port <service> 80 find port that is available.

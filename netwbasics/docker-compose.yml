@@ -5,6 +5,10 @@ services:
    container_name: first
    networks:
     - frontend
+   links:
+    - b:bee
+    - c:cee    
+    
   b:
    image: tutum/hello-world
    container_name: second
