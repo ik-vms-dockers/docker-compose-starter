@@ -31,3 +31,12 @@ docker-compose port --index=<instance index> <worker service> 80
 # provide environment variables to environment
 docker-compose run worker env
 
+# show config for current yml version
+docker-compose config
+
+# merge different composers
+docker-compose -f docker-compose.yml -f docker-compose.merge.yml config
+
+
+
+
