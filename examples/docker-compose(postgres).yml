@@ -1,0 +1,26 @@
+version: '2'
+services:
+  db:
+   image: postgres:latest
+   container_name: "CONT-POSTGRES"
+   hostname: dbpost
+   ports:
+    - 5432:5432
+   environment:
+    - POSTGRES_DB=postgres
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
+   networks:
+      internal:
+         ipv4_address: 172.16.11.5
+
+networks:
+  internal:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+          - subnet: 172.16.11.0/24
+            gateway: 172.16.11.1
+
+
