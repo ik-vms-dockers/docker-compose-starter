@@ -1,0 +1,53 @@
+# docker-compose build
+# docker-compose up
+# docker-compose -f docker-compose.yml down -v --remove-orphans
+# docker-compose restart flyway
+version: '3'
+services:
+  postgres:
+    container_name: postgres-container
+    image: postgres:13.2-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      PGDATA: /data/postgres
+      POSTGRES_DB: ${POSTGRES_DB:-om}
+    healthcheck:
+      test: "pg_isready -q -U postgres"
+    volumes:
+    - postgres:/data/postgres
+    ports:
+    - "5432:5432"
+    restart: unless-stopped
+  # database UI
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    restart: unless-stopped
+  # db migration tool
+  flyway:
+    image: flyway/flyway:7.7-alpine
+    command: -configFiles=/flyway/conf/flyway.conf -locations=filesystem:/flyway/sql,filesystem:/flyway/local/sql migrate
+    environment:
+    - FLYWAY_USER=${DB_USER:-postgres}
+    - FLYWAY_PASSWORD=${DB_PASSWORD:-changeme}
+    - FLYWAY_URL=jdbc:postgresql://postgres:${DB_PORT:-5432}/${DB_NAME:-db-name}
+    volumes:
+    - ${PWD}/dbmigrations/ddl:/flyway/sql
+    - ${PWD}/dbmigrations/local:/flyway/local/sql
+    - ${PWD}/dbmigrations/config/flyway.conf:/flyway/conf/flyway.conf
+    depends_on:
+      - postgres
+
+volumes:
+  postgres:
+  pgadmin:
+    
