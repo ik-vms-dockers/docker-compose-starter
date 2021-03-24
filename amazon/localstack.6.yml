@@ -30,7 +30,26 @@ services:
       - ./data:/tmp/localstack
       - "/var/run/docker.sock:/var/run/docker.sock"
       - ./bin:/docker-entrypoint-initaws.d
-      
+
+  scheduler:
+    build:
+      context: ./dask
+      dockerfile: Dockerfile
+    image: daskdev/dask
+    hostname: dask-scheduler
+    networks:
+      - localstack-net
+    ports:
+      - "8786:8786"
+      - "8787:8787"
+    command: ["dask-scheduler"]
+    environment:
+      - AWS_ACCESS_KEY_ID=foo
+      - AWS_SECRET_ACCESS_KEY=bar
+      - AWS_DEFAULT_REGION=us-east-1
+    depends_on:
+      - localstack
+
 networks:
   localstack-net:
     external: false
