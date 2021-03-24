@@ -1,0 +1,24 @@
+---
+source: https://dev.to/goodidea/how-to-fake-aws-locally-with-localstack-27me
+tags: ['aws', 'amazon', 'localstack']
+---
+
+# AWS_ACCESS_KEY_ID='abc'
+# AWS_SECRET_KEY='123'
+# AWS_BUCKET_NAME='demo-bucket'
+
+version: '3.2'
+services:
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack_demo
+    ports:
+      - '4563-4599:4563-4599'
+      - '8055:8080'
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+    volumes:
+      - './.localstack:/tmp/localstack'
+      - '/var/run/docker.sock:/var/run/docker.sock'

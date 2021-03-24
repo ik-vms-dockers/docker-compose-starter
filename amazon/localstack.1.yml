@@ -1,0 +1,28 @@
+---
+source: https://www.freecodecamp.org/news/how-to-build-and-deploy-aws-applications-on-local-machine
+tags: ['aws', 'amazon', 'localstack']
+---
+
+# https://github.com/localstack/localstack
+# http://localhost:4566/health
+# aws configure --profile localstack
+# aws s3 --endpoint-url http://localhost:4566 create-bucket io.pratik.mybucket
+# aws --endpointurl http://localhost:4956 kinesis list-streams
+# aws --endpoint-url=http://localhost:4572 s3api put-bucket-acl --bucket demo-bucket --acl public-read
+
+version: '3'
+services:
+  localstack:
+    container_name: ${LOCALSTACK_DOCKER_NAME-localstack_main}
+    image: localstack/localstack
+    network_mode: bridge
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=dynamodb
+      - DEFAULT_REGION=us-west-1
+      - LAMBDA_EXECUTOR=local
+      - DATA_DIR=/tmp/localstack/data
+    volumes:
+      - "./tmp/localstack:/tmp/localstack"
+      - "./tmp/localstack/run/docker.sock:/var/run/docker.sock"
